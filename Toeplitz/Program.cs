@@ -15,10 +15,10 @@ namespace Toeplitz
             //TestGenerator.GenerateTests(100, 1, 1);
 
             //Sprawdza wszystkie testy
-            //TestRunner.RunAllTests("..\\..\\TestingData");
+            TestRunner.RunAllTests("..\\..\\TestingData");
 
             //Sprawdza konkretny test
-            TestRunner.RunTest("..\\..\\TestingData\\test_3.txt", true);
+            //TestRunner.RunTest("..\\..\\TestingData\\test_85.txt", true);
 
             /* Odkomentować na koniec
              * 
