@@ -19,10 +19,11 @@ namespace Toeplitz
 
             for(int i = 0; i < testCount; i++)
             {
-                string filename = "test_" + (i+1) + ".txt";
+                int n = minSize + i * sizeStep;
+
+                string filename = "test_" + (n) + ".txt";
                 string[] lines = new string[3];
                 
-                long n = minSize + i * sizeStep;
                 lines[0] = n.ToString();
 
                 for (int j = 0; j < 2 * n - 1; j++)
