@@ -12,13 +12,13 @@ namespace Toeplitz
         static void Main(string[] args)
         {
             //Generuje testy
-            //TestGenerator.GenerateTests(100, 1, 1);
+            //TestGenerator.GenerateTests(100, 10, 10);
 
             //Sprawdza wszystkie testy
-            TestRunner.RunAllTests("..\\..\\TestingData");
+            //TestRunner.RunAllTests("..\\..\\TestingData");
 
             //Sprawdza konkretny test
-            //TestRunner.RunTest("..\\..\\TestingData\\test_85.txt", true);
+            TestRunner.RunTest("..\\..\\TestingData\\test_1.txt", true);
 
             /* Odkomentować na koniec
              * 

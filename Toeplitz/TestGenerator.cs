@@ -27,7 +27,7 @@ namespace Toeplitz
 
                 for (int j = 0; j < 2 * n - 1; j++)
                 {
-                    lines[1] += rand.Next(0, 100);
+                    lines[1] += rand.Next(0, 40000);
                     if (j != 2 * n - 2)
                         lines[1] += " ";
                 }

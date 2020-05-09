@@ -89,7 +89,8 @@ namespace Toeplitz
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("BŁĘDNY WYNIK");
                 Console.ResetColor();
-                
+                Console.WriteLine($"Rozmiar problemu: {wClassic.Length}");
+
                 if (verboseMode)
                 {
                     Console.WriteLine("Wynik:");
