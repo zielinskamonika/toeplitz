@@ -8,19 +8,19 @@ namespace Toeplitz
 {
     class ToeplitzMatrix
     {
-        private int[] coefficients;
+        private long[] coefficients;
         public int Size
         {
             get;
             private set;
         }
-        public ToeplitzMatrix(int[] coefficients)
+        public ToeplitzMatrix(long[] coefficients)
         {
             Size = (coefficients.Length + 1) / 2;
             this.coefficients = coefficients;
         }
 
-        public int this[int index1, int index2]
+        public long this[int index1, int index2]
         {
             get
             {
@@ -43,10 +43,10 @@ namespace Toeplitz
             return s;
         }
 
-        public int[] ClassicMultiply(int[] v)
+        public long[] ClassicMultiply(long[] v)
         {
-            int[] w = new int[Size];
-            int sum;
+            long[] w = new long[Size];
+            long sum;
             for (int i = 0; i < Size; i++) // obliczamy i-ty element wektora, i-ty wiersz macierzy
             {
                 sum = 0;
@@ -59,7 +59,7 @@ namespace Toeplitz
 
             return w;
         }
-        public int[] FastMultiply(int[] v)
+        public long[] FastMultiply(long[] v)
         {
             //resize to power of 2
             this.coefficients = ResizeToPowerOf2(this.coefficients);
@@ -70,38 +70,39 @@ namespace Toeplitz
 
             Complex[] y_a = FFT(this.coefficients);
             Complex[] y_v = FFT(v);
-            Complex[] y_w = PointwiseMultiply(y_a, y_v);
-      
-            int[] w = InverseFFT(y_w).Select(c => (int)Math.Round(c.Real)).ToArray();
-            int[] result = new int[Size];
-            for (int i = 0; i < result.Length; i++)
+            Complex[] y_w = PolongwiseMultiply(y_a, y_v);
+
+            Complex[] w_complex = InverseFFT(y_w);
+            long[] w = w_complex.Select(c => (long)Math.Round(c.Real)).ToArray();
+            long[] result = new long[Size];
+            for (long i = 0; i < result.Length; i++)
                 result[i] = w[i + Size - 1] / n;
 
             return result;
         }
 
-        private int[] ResizeToPowerOf2(int[] origin)
+        private long[] ResizeToPowerOf2(long[] origin)
         {
             int power = 1;
             while (power < origin.Length)
                 power *= 2;
 
-            int[] resized = new int[power];
-            for (int i = 0; i < origin.Length; i++)
+            long[] resized = new long[power];
+            for (long i = 0; i < origin.Length; i++)
                 resized[i] = origin[i];
             return resized;
         }
-        private int[] ResizeToN(int[] origin, int n)
+        private long[] ResizeToN(long[] origin, int n)
         {
-            int[] resized = new int[n];
-            for (int i = 0; i < origin.Length; i++)
+            long[] resized = new long[n];
+            for (long i = 0; i < origin.Length; i++)
                 resized[i] = origin[i];
             return resized;
         }
 
-        private Complex[] FFT(int[] a)
+        private Complex[] FFT(long[] a)
         {
-            int n = a.Length;
+            long n = a.Length;
             Complex[] y = new Complex[n];
             if (n == 1)
             {
@@ -111,13 +112,13 @@ namespace Toeplitz
             Complex w_n = new Complex(Math.Cos(2 * Math.PI / n), Math.Sin(2 * Math.PI / n));
             Complex w = new Complex(1, 0);
 
-            int[] a_0 = GetHalfOfCoefficients(a, even: true);
-            int[] a_1 = GetHalfOfCoefficients(a, even: false);
+            long[] a_0 = GetHalfOfCoefficients(a, even: true);
+            long[] a_1 = GetHalfOfCoefficients(a, even: false);
 
             Complex[] y_0 = FFT(a_0);
             Complex[] y_1 = FFT(a_1);
 
-            for(int k = 0; k < n/2; k++)
+            for(long k = 0; k < n/2; k++)
             {
                 y[k] = y_0[k] + w * y_1[k];
                 y[k + n / 2] = y_0[k] - w * y_1[k];
@@ -127,12 +128,12 @@ namespace Toeplitz
             return y;
         }
 
-        private Complex[] PointwiseMultiply(Complex[] v1, Complex[] v2)
+        private Complex[] PolongwiseMultiply(Complex[] v1, Complex[] v2)
         {
             if (v1.Length != v2.Length)
                 throw new Exception();
             Complex[] w = new Complex[v1.Length];
-            for (int i = 0; i < w.Length; i++)
+            for (long i = 0; i < w.Length; i++)
                 w[i] = v1[i] * v2[i];
             return w;
         }
@@ -167,9 +168,9 @@ namespace Toeplitz
 
         private T[] GetHalfOfCoefficients<T>(T[] coefficients, bool even)
         {
-            int start = even ? 0 : 1;
+            long start = even ? 0 : 1;
             T[] halfOfCoefficients = new T[coefficients.Length / 2];
-            for(int i = 0; i < halfOfCoefficients.Length; i++)
+            for(long i = 0; i < halfOfCoefficients.Length; i++)
             {
                 halfOfCoefficients[i] = coefficients[start];
                 start += 2;

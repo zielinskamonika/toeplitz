@@ -22,7 +22,7 @@ namespace Toeplitz
                 string filename = "test_" + (i+1) + ".txt";
                 string[] lines = new string[3];
                 
-                int n = minSize + i * sizeStep;
+                long n = minSize + i * sizeStep;
                 lines[0] = n.ToString();
 
                 for (int j = 0; j < 2 * n - 1; j++)

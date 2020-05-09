@@ -23,8 +23,8 @@ namespace Toeplitz
         public static void RunTest(string testPath, bool verboseMode = false, bool saveResults = false)
         {
             ToeplitzMatrix m;
-            int[] v;
-            int[] wClassic, wFast;
+            long[] v;
+            long[] wClassic, wFast;
             TimeSpan classicTime, fastTime;
             
             Console.WriteLine("Test " + testPath);
@@ -35,7 +35,7 @@ namespace Toeplitz
                 Console.WriteLine("Macierz:");
                 Console.WriteLine(m);
                 Console.WriteLine("Wektor (transponowany):");
-                for (int i = 0; i < v.Length; i++)
+                for (long i = 0; i < v.Length; i++)
                 {
                     Console.Write(v[i] + " ");
                 }
@@ -56,7 +56,7 @@ namespace Toeplitz
 
             bool correct = true;
 
-            for(int i = 0; i < wClassic.Length; i++)
+            for(long i = 0; i < wClassic.Length; i++)
             {
                 if (wClassic[i] != wFast[i])
                 {
@@ -77,7 +77,7 @@ namespace Toeplitz
                 if (verboseMode)
                 {
                     Console.WriteLine("Wynik:");
-                    for (int i = 0; i < wClassic.Length; i++)
+                    for (long i = 0; i < wClassic.Length; i++)
                     {
                         Console.Write(wClassic[i] + " ");
                     }
@@ -94,13 +94,13 @@ namespace Toeplitz
                 if (verboseMode)
                 {
                     Console.WriteLine("Wynik:");
-                    for (int i = 0; i < wFast.Length; i++)
+                    for (long i = 0; i < wFast.Length; i++)
                     {
                         Console.Write(wFast[i] + " ");
                     }
                     Console.WriteLine();
                     Console.WriteLine("Oczekiwany wynik:");
-                    for (int i = 0; i < wClassic.Length; i++)
+                    for (long i = 0; i < wClassic.Length; i++)
                     {
                         Console.Write(wClassic[i] + " ");
                     }
