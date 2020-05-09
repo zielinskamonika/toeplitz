@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace Toeplitz
             Directory.CreateDirectory(testDirectory + "\\Results");
             foreach(var file in files)
             {
-                RunTest(file, false, true);
+                RunTest(file, false, saveResults);
                 Console.WriteLine("------------------------------------------");
             }
         }
@@ -30,7 +31,7 @@ namespace Toeplitz
             Console.WriteLine("Test " + testPath);
             DataHandler.ReadData(testPath, out m, out v);
 
-            if (verboseMode)
+            if (verboseMode && v.Length <= 10)
             {
                 Console.WriteLine("Macierz:");
                 Console.WriteLine(m);
@@ -71,10 +72,10 @@ namespace Toeplitz
                 Console.WriteLine("OK");
                 Console.ResetColor();
                 Console.WriteLine($"Rozmiar problemu: {wClassic.Length}");
-                Console.WriteLine($"Czas mnożenia klasycznego: {classicTime.TotalSeconds}s");
-                Console.WriteLine($"Czas mnożenia szybkiego: {fastTime.TotalSeconds}s");
+                Console.WriteLine($"Czas mnożenia klasycznego: {classicTime.TotalSeconds.ToString("0.########")}s");
+                Console.WriteLine($"Czas mnożenia szybkiego: {fastTime.TotalSeconds.ToString("0.########")}s");
 
-                if (verboseMode)
+                if (verboseMode && v.Length <= 10)
                 {
                     Console.WriteLine("Wynik:");
                     for (long i = 0; i < wClassic.Length; i++)
@@ -110,7 +111,7 @@ namespace Toeplitz
 
             if (saveResults)
             {
-                DataHandler.WriteData(DataHandler.GetResultFilepath(testPath), wFast);
+                DataHandler.SaveResult(testPath, wFast);
             }
         }
     }

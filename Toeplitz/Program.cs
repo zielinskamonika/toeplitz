@@ -11,33 +11,28 @@ namespace Toeplitz
     {
         static void Main(string[] args)
         {
-            //Generuje testy
-            //TestGenerator.GenerateTests(10, 10, 10);
-
-            //Sprawdza wszystkie testy
-            TestRunner.RunAllTests("..\\..\\TestingData");
-
-            //Sprawdza konkretny test
-            //TestRunner.RunTest("..\\..\\TestingData\\test_2.txt", true);
-
-            /* Odkomentować na koniec
-             * 
-            Console.WriteLine("Podaj lokalizacje folderu z testami lub pliku testowego wzgledem biezacego katalogu. " +
-                "Domyslnie zostanie wybrany folder TestingData.");
+            Console.WriteLine("Podaj lokalizacje folderu z testami lub pliku testowego wzgledem biezacego katalogu.");
             string path = Console.ReadLine();
-            if (string.IsNullOrEmpty(path))
-                path = "..\\..\\TestingData";
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                Console.WriteLine("Nie została podana ścieżka.");
+                return;
+            }
 
             FileAttributes attr = File.GetAttributes(path);
             if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
             {
-                Console.WriteLine("Wyniki zostaną zapisane w podanym miejscu w folderze Results");
                 TestRunner.RunAllTests(path, true);
+                Console.WriteLine("Wyniki mnożenia zostaly zapisane w podanej lokalizacji w folderze Results");
             }
             else
             {
-                TestRunner.RunTest(path, true);
-            }*/
+                TestRunner.RunTest(path, true, true);
+                Console.WriteLine("Wynik zostal zapisany w podanej lokalizacji w folderze Results.");
+            }
+
+            Console.ReadLine();
         }
     }
 }
