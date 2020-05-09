@@ -61,31 +61,32 @@ namespace Toeplitz
         }
         public long[] FastMultiply(long[] v)
         {
-            //resize to power of 2
-            this.coefficients = ResizeToPowerOf2(this.coefficients);
-            //double size
-            int n = this.coefficients.Length * 2;
-            this.coefficients = ResizeToN(this.coefficients, n);
+            //resize to power of 2 & double
+            coefficients = ResizeToDoublePowerOf2(coefficients);
+            int n = coefficients.Length;
+
+            // make v the same length
             v = ResizeToN(v, n);
 
-            Complex[] y_a = FFT(this.coefficients);
+            Complex[] y_a = FFT(coefficients);
             Complex[] y_v = FFT(v);
-            Complex[] y_w = PolongwiseMultiply(y_a, y_v);
+            Complex[] y_w = PointwiseMultiply(y_a, y_v);
 
-            Complex[] w_complex = InverseFFT(y_w);
-            long[] w = w_complex.Select(c => (long)Math.Round(c.Real)).ToArray();
+            Complex[] w = InverseFFT(y_w);
+
             long[] result = new long[Size];
             for (long i = 0; i < result.Length; i++)
-                result[i] = w[i + Size - 1] / n;
+                result[i] = (long)Math.Round(w[i + Size - 1].Real) / n;
 
             return result;
         }
 
-        private long[] ResizeToPowerOf2(long[] origin)
+        private long[] ResizeToDoublePowerOf2(long[] origin)
         {
             int power = 1;
             while (power < origin.Length)
                 power *= 2;
+            power *= 2;
 
             long[] resized = new long[power];
             for (long i = 0; i < origin.Length; i++)
@@ -128,7 +129,7 @@ namespace Toeplitz
             return y;
         }
 
-        private Complex[] PolongwiseMultiply(Complex[] v1, Complex[] v2)
+        private Complex[] PointwiseMultiply(Complex[] v1, Complex[] v2)
         {
             if (v1.Length != v2.Length)
                 throw new Exception();
