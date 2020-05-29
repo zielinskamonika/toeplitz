@@ -24,8 +24,8 @@ namespace Toeplitz
         public static void RunTest(string testPath, bool verboseMode = false, bool saveResults = false)
         {
             ToeplitzMatrix m;
-            long[] v;
-            long[] wClassic, wFast;
+            double[] v;
+            double[] wClassic, wFast;
             TimeSpan classicTime, fastTime;
             
             Console.WriteLine("Test " + testPath);

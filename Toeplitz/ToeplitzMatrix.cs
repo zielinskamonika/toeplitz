@@ -8,19 +8,19 @@ namespace Toeplitz
 {
     class ToeplitzMatrix
     {
-        private long[] coefficients;
+        private double[] coefficients;
         public int Size
         {
             get;
             private set;
         }
-        public ToeplitzMatrix(long[] coefficients)
+        public ToeplitzMatrix(double[] coefficients)
         {
             Size = (coefficients.Length + 1) / 2;
             this.coefficients = coefficients;
         }
 
-        public long this[int index1, int index2]
+        public double this[int index1, int index2]
         {
             get
             {
@@ -43,10 +43,10 @@ namespace Toeplitz
             return s;
         }
 
-        public long[] ClassicMultiply(long[] v)
+        public double[] ClassicMultiply(double[] v)
         {
-            long[] w = new long[Size];
-            long sum;
+            double[] w = new double[Size];
+            double sum;
             for (int i = 0; i < Size; i++) // obliczamy i-ty element wektora, i-ty wiersz macierzy
             {
                 sum = 0;
@@ -59,7 +59,7 @@ namespace Toeplitz
 
             return w;
         }
-        public long[] FastMultiply(long[] v)
+        public double[] FastMultiply(double[] v)
         {
             //resize to power of 2 & double
             coefficients = ResizeToDoublePowerOf2(coefficients);
@@ -74,34 +74,34 @@ namespace Toeplitz
 
             Complex[] w = InverseFFT(y_w);
 
-            long[] result = new long[Size];
+            double[] result = new double[Size];
             for (long i = 0; i < result.Length; i++)
-                result[i] = (long)Math.Round(w[i + Size - 1].Real) / n;
+                result[i] = (double)Math.Round(w[i + Size - 1].Real) / n;
 
             return result;
         }
 
-        private long[] ResizeToDoublePowerOf2(long[] origin)
+        private double[] ResizeToDoublePowerOf2(double[] origin)
         {
             int power = 1;
             while (power < origin.Length)
                 power *= 2;
             power *= 2;
 
-            long[] resized = new long[power];
+            double[] resized = new double[power];
             for (long i = 0; i < origin.Length; i++)
                 resized[i] = origin[i];
             return resized;
         }
-        private long[] ResizeToN(long[] origin, int n)
+        private double[] ResizeToN(double[] origin, int n)
         {
-            long[] resized = new long[n];
+            double[] resized = new double[n];
             for (long i = 0; i < origin.Length; i++)
                 resized[i] = origin[i];
             return resized;
         }
 
-        private Complex[] FFT(long[] a)
+        private Complex[] FFT(double[] a)
         {
             long n = a.Length;
             Complex[] y = new Complex[n];
@@ -113,8 +113,8 @@ namespace Toeplitz
             Complex w_n = new Complex(Math.Cos(2 * Math.PI / n), Math.Sin(2 * Math.PI / n));
             Complex w = new Complex(1, 0);
 
-            long[] a_0 = GetHalfOfCoefficients(a, even: true);
-            long[] a_1 = GetHalfOfCoefficients(a, even: false);
+            double[] a_0 = GetHalfOfCoefficients(a, even: true);
+            double[] a_1 = GetHalfOfCoefficients(a, even: false);
 
             Complex[] y_0 = FFT(a_0);
             Complex[] y_1 = FFT(a_1);

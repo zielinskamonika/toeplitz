@@ -9,7 +9,7 @@ namespace Toeplitz
 {
     class DataHandler
     {
-        public static void ReadData(string filepath, out ToeplitzMatrix m, out long[] v)
+        public static void ReadData(string filepath, out ToeplitzMatrix m, out double[] v)
         {
             var lines = File.ReadAllLines(filepath);
             if (lines.Length < 3)
@@ -17,19 +17,19 @@ namespace Toeplitz
             long n = long.Parse(lines[0]);
 
             var a = lines[1].Split(' ');
-            var a2 = a.Select(x => long.Parse(x)).ToArray();
+            var a2 = a.Select(x => double.Parse(x)).ToArray();
             if (a.Length != 2 * n - 1)
                 throw new InvalidDataException();
             a.Reverse();
             
-            long[] vect = lines[2].Split(' ').Select(x => long.Parse(x)).ToArray();
+            double[] vect = lines[2].Split(' ').Select(x => double.Parse(x)).ToArray();
             if (vect.Length != n)
                 throw new InvalidDataException();
 
             m = new ToeplitzMatrix(a2);
             v = vect;
         }
-        public static void SaveResult(string testFilepath, long[] v)
+        public static void SaveResult(string testFilepath, double[] v)
         {
             Directory.CreateDirectory(GetResultDirectory(testFilepath));
 
@@ -37,7 +37,7 @@ namespace Toeplitz
             lines[0] = v.Length.ToString();
             lines[1] = "";
 
-            foreach(long elem in v)
+            foreach(double elem in v)
             {
                 lines[1] += elem + " ";
             }
