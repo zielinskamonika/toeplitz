@@ -56,8 +56,8 @@ namespace Toeplitz
                 }
                 w[i] = sum;
             }
-
-            return w;
+            
+            return w.Select(d => Math.Round(d, 4)).ToArray();
         }
         public double[] FastMultiply(double[] v)
         {
@@ -76,9 +76,9 @@ namespace Toeplitz
 
             double[] result = new double[Size];
             for (long i = 0; i < result.Length; i++)
-                result[i] = (double)Math.Round(w[i + Size - 1].Real) / n;
+                result[i] = w[i + Size - 1].Real / n;
 
-            return result;
+            return result.Select(d => Math.Round(d, 4)).ToArray();
         }
 
         private double[] ResizeToDoublePowerOf2(double[] origin)

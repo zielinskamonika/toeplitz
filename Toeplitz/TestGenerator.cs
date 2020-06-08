@@ -28,14 +28,15 @@ namespace Toeplitz
 
                 for (int j = 0; j < 2 * n - 1; j++)
                 {
-                    lines[1] += rand.Next(0, 40000);
+          //40 000
+                    lines[1] += Math.Round(rand.NextDouble() * 40000, 4);
                     if (j != 2 * n - 2)
                         lines[1] += " ";
                 }
 
                 for (int j = 0; j < n; j++)
                 {
-                    lines[2] += rand.Next(0, 100);
+                    lines[2] += Math.Round(rand.NextDouble() * 100, 4);
                     if (j != n - 1)
                         lines[2] += " ";
                 }
